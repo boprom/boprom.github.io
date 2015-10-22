@@ -30,8 +30,8 @@ window.boprom.places = {
         title: 'Ruhrpark',
         street: 'Am Einkaufszentrum 1',
         postal: '44791',
-        lat: 51.495063,
-        lon: 7.282987,
+        lat: 51.495191,
+        lon: 7.281083,
         quote: 'Der erste und einzige Preis ist das Wolkenauto.'
     },
     ruhruniversitaet: {
@@ -108,7 +108,8 @@ Zepto(function ($) {
                 $addressInfoStreet.html(placeObj.street);
                 $addressInfoCity.html(placeObj.postal + ' Bochum');
                 latlon = placeObj.lat + ',' + placeObj.lon;
-                mapUrl = 'https://maps.apple.com/?ll=' + latlon + '&daddr=' + latlon;
+                mapUrl = 'https://maps.apple.com/?address=' + latlon +
+                    '&ll=' + latlon + '&daddr=' + latlon;
                 $addressInfoNavigate.attr('href', mapUrl);
                 $addressInfo.addClass('active');
                 $('body').scrollTop($mapWrapper.parent().prop('scrollHeight'));

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+
+ <metadata id="metadata3077">image/svg+xml</metadata>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <circle transform="matrix(2,0,0,2,-497.73798,75.5202) " fill="#d45500" stroke-width="8" cx="263.86899" cy="-22.85814" r="15" id="circle5341"/>
+  <path fill="#ffffff" stroke-width="0.142" d="m33.921959,10.245938l-12.359985,9.44l-7.946013,0l0,21.229979l7.946013,0l12.359985,9.444031l0,-40.117976l0,0.003967z" id="path5345"/>
+  <path fill="#ffffff" fill-rule="evenodd" stroke-width="1.42" d="m41.816036,18.141932l-2.064026,1.936035c0,0 3.684021,3.914001 3.684021,10.345947c0,6.432005 -3.684021,10.346006 -3.684021,10.346006l2.064026,1.940002c0,0 4.452026,-4.753967 4.452026,-12.283995c0,-7.529968 -4.452026,-12.279968 -4.452026,-12.279968l0,-0.004028z" id="path5347"/>
+ </g>
+</svg>

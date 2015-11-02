@@ -1117,7 +1117,7 @@ a:hover {
 }
 
 .container--legal {
-  padding: 4em 0 2em;
+  padding: 4em 1em 2em;
 }
 
 @media screen and (max-width: 420px) {

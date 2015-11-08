@@ -263,7 +263,8 @@ select {
  *    `input` and others.
  */
 button,
-html input[type="button"], input[type="reset"],
+html input[type="button"],
+input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
@@ -442,8 +443,8 @@ small, .font_small {
 
 a {
   color: #cbcbcb;
-  -webkit-transition: color 0.2s ease-in-out;
-          transition: color 0.2s ease-in-out;
+  -webkit-transition: color .2s ease-in-out;
+          transition: color .2s ease-in-out;
 }
 
 a:hover {
@@ -493,6 +494,13 @@ a:hover {
   /* only required for <img /> */
 }
 
+.noscriptMsg {
+  padding: 1.4em 2em 1.8em;
+  color: #D70B52;
+  font-weight: 700;
+  text-align: center;
+}
+
 .container--footer {
   padding-top: 2em;
 }
@@ -523,7 +531,7 @@ a:hover {
 .place-teaser a {
   display: inline-block;
   margin: 1em;
-  padding: 0.4em 2em;
+  padding: .4em 2em;
   border: 2px solid #fff;
   font-weight: 700;
   text-decoration: none;
@@ -531,8 +539,8 @@ a:hover {
   -webkit-transform: skewY(-15deg);
       -ms-transform: skewY(-15deg);
           transform: skewY(-15deg);
-  -webkit-transition: all 0.2s ease-in-out;
-          transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+          transition: all .2s ease-in-out;
   letter-spacing: 2px;
 }
 
@@ -588,7 +596,7 @@ a:hover {
 }
 
 .place-title {
-  padding: 0.3em 0 0.6em;
+  padding: .3em 0 .6em;
   font-size: 1.6em;
   text-transform: uppercase;
 }
@@ -602,23 +610,19 @@ a:hover {
 }
 
 .container--map h2 {
-  margin: 0.4em 0 0.8em;
+  margin: .4em 0 .8em;
   color: #fff;
 }
 
 #address-info {
-  max-height: 0;
+  display: none;
   border-top: 2px solid #D70B52;
   color: #D70B52;
   background: #fff;
-  -webkit-transition: max-height 0.2s ease-out;
-          transition: max-height 0.2s ease-out;
 }
 
 #address-info.active {
-  max-height: 1000px;
-  -webkit-transition-timing-function: ease-in;
-          transition-timing-function: ease-in;
+  display: block;
 }
 
 #address-info_inner {
@@ -637,7 +641,7 @@ a:hover {
 #address-info_navigate {
   display: inline-block;
   margin: 3em 0;
-  padding: 0.4em 2em;
+  padding: .4em 2em;
   border: 2px solid #D70B52;
   color: #D70B52;
   font-weight: 700;
@@ -646,8 +650,8 @@ a:hover {
   letter-spacing: 2px;
   -webkit-transform: skewY(-15deg) translate3d(0, 0, 0);
           transform: skewY(-15deg) translate3d(0, 0, 0);
-  -webkit-transition: all 0.2s ease-in-out;
-          transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+          transition: all .2s ease-in-out;
 }
 
 #address-info_navigate:hover {
@@ -721,8 +725,7 @@ a:hover {
   cursor: pointer;
 }
 
-.player-button:before,
-.player-button:after {
+.player-button:before, .player-button:after {
   content: '';
   position: absolute;
   display: block;
@@ -733,8 +736,8 @@ a:hover {
   border: 0 solid transparent;
   border-width: 16px 0 16px 30px;
   border-left-color: #fff;
-  -webkit-transition: all 0.1s ease-in-out;
-          transition: all 0.1s ease-in-out;
+  -webkit-transition: all .1s ease-in-out;
+          transition: all .1s ease-in-out;
 }
 
 .player-button:before {
@@ -746,8 +749,7 @@ a:hover {
   left: 30px;
 }
 
-.player--playing .player-button::before,
-.player--playing .player-button::after {
+.player--playing .player-button::before, .player--playing .player-button::after {
   height: 64px;
   border-width: 0 0 0 24px;
 }
@@ -761,8 +763,8 @@ a:hover {
   z-index: 20;
   position: relative;
   padding: 14px 0;
-  -webkit-transition: opacity 0.2s ease-in-out;
-          transition: opacity 0.2s ease-in-out;
+  -webkit-transition: opacity .2s ease-in-out;
+          transition: opacity .2s ease-in-out;
 }
 
 .player-progress_track {
@@ -798,8 +800,8 @@ a:hover {
   background-image: -webkit-repeating-linear-gradient(135deg, #D70B52, #D70B52 11px, #fff 10px, #fff 20px);
   background-image: repeating-linear-gradient(-45deg, #D70B52, #D70B52 11px, #fff 10px, #fff 20px);
   background-size: 28px 28px;
-  -webkit-animation: move 0.8s linear infinite;
-          animation: move 0.8s linear infinite;
+  -webkit-animation: move .8s linear infinite;
+          animation: move .8s linear infinite;
 }
 
 .player-message {
@@ -811,12 +813,12 @@ a:hover {
   width: 100%;
   text-align: center;
   background: #D70B52;
-  -webkit-transition: all 0.2s ease-in-out;
-          transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+          transition: all .2s ease-in-out;
 }
 
 .player-message_text {
-  padding: 0 0 0.5em;
+  padding: 0 0 .5em;
   line-height: 1;
 }
 
@@ -828,13 +830,13 @@ a:hover {
   float: left;
   width: 32%;
   margin: 0 0 0 4%;
-  padding: 0.4em 0.4em;
+  padding: .4em .4em;
   border: 2px solid #fff;
   color: #fff;
   background: #D70B52;
   text-transform: uppercase;
-  -webkit-transition: all 0.2s ease-in-out;
-          transition: all 0.2s ease-in-out;
+  -webkit-transition: all .2s ease-in-out;
+          transition: all .2s ease-in-out;
   line-height: 1;
 }
 
@@ -894,6 +896,7 @@ a:hover {
 }
 
 .map-wrapper {
+  display: none;
   position: relative;
   height: 0;
   padding-bottom: 83.772%;
@@ -901,12 +904,24 @@ a:hover {
   text-align: left;
 }
 
-.map {
+.js .map-wrapper {
   display: block;
+}
+
+.map {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
+  width: 100%;
+}
+
+.inlinesvg .map {
+  display: block;
+}
+
+.mapFallback {
   width: 100%;
 }
 
@@ -936,8 +951,8 @@ a:hover {
 }
 
 #bomap .features {
-  -webkit-transition: all 0.4s ease-in-out;
-          transition: all 0.4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+          transition: all .4s ease-in-out;
 }
 
 #bomap .railroad {
@@ -966,8 +981,8 @@ a:hover {
   fill: rgba(255, 255, 255, 0);
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
-  -webkit-transition: all 0.2s;
-          transition: all 0.2s;
+  -webkit-transition: all .2s;
+          transition: all .2s;
 }
 
 #bomap .zoom-hover:hover {
@@ -983,8 +998,8 @@ a:hover {
   -webkit-transform-origin: 0px 0px 0px;
       -ms-transform-origin: 0px 0px 0px;
           transform-origin: 0px 0px 0px;
-  -webkit-transition: all 0.4s ease-in-out;
-          transition: all 0.4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+          transition: all .4s ease-in-out;
 }
 
 #bomap .control-zoom-out {
@@ -995,8 +1010,8 @@ a:hover {
   -webkit-transform: translate(500px, 500px) scale(5);
       -ms-transform: translate(500px, 500px) scale(5);
           transform: translate(500px, 500px) scale(5);
-  -webkit-transition: -webkit-transform 0.4s ease-in-out, fill 0.2s ease-in-out;
-          transition: transform 0.4s ease-in-out, fill 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform .4s ease-in-out, fill .2s ease-in-out;
+          transition: transform .4s ease-in-out, fill .2s ease-in-out;
 }
 
 #bomap .control-zoom-out:hover {
@@ -1005,8 +1020,8 @@ a:hover {
 
 #bomap .control-zoom-out_cover {
   fill: #fff;
-  -webkit-transition: fill 0.2s ease-in-out;
-          transition: fill 0.2s ease-in-out;
+  -webkit-transition: fill .2s ease-in-out;
+          transition: fill .2s ease-in-out;
 }
 
 #bomap .control-zoom-out:hover .control-zoom-out_cover {
@@ -1016,8 +1031,8 @@ a:hover {
 #bomap .place {
   fill: #D70B52;
   cursor: pointer;
-  -webkit-transition: fill 0.2s ease-in-out;
-          transition: fill 0.2s ease-in-out;
+  -webkit-transition: fill .2s ease-in-out;
+          transition: fill .2s ease-in-out;
 }
 
 #bomap .place:hover {
@@ -1062,23 +1077,23 @@ a:hover {
           transform: translate(0, 0) scale(1);
 }
 
-#bomap.active-exzenterhaus #exzenterhaus .place-marker_circle,
-#bomap.active-jahrhunderthalle #jahrhunderthalle .place-marker_circle,
-#bomap.active-musikzentrum #musikzentrum .place-marker_circle,
-#bomap.active-ruhrpark #ruhrpark .place-marker_circle,
-#bomap.active-ruhruniversitaet #ruhruniversitaet .place-marker_circle,
-#bomap.active-stadtbad #stadtbad .place-marker_circle,
-#bomap.active-u35 #u35 .place-marker_circle {
+#bomap.active-exzenterhaus #place-exzenterhaus .place-marker_circle,
+#bomap.active-jahrhunderthalle #place-jahrhunderthalle .place-marker_circle,
+#bomap.active-musikzentrum #place-musikzentrum .place-marker_circle,
+#bomap.active-ruhrpark #place-ruhrpark .place-marker_circle,
+#bomap.active-ruhruniversitaet #place-ruhruniversitaet .place-marker_circle,
+#bomap.active-stadtbad #place-stadtbad .place-marker_circle,
+#bomap.active-u35 #place-u35 .place-marker_circle {
   fill: inherit;
 }
 
-#bomap.active-exzenterhaus #exzenterhaus .place-marker_symbol,
-#bomap.active-jahrhunderthalle #jahrhunderthalle .place-marker_symbol,
-#bomap.active-musikzentrum #musikzentrum .place-marker_symbol,
-#bomap.active-ruhrpark #ruhrpark .place-marker_symbol,
-#bomap.active-ruhruniversitaet #ruhruniversitaet .place-marker_symbol,
-#bomap.active-stadtbad #stadtbad .place-marker_symbol,
-#bomap.active-u35 #u35 .place-marker_symbol {
+#bomap.active-exzenterhaus #place-exzenterhaus .place-marker_symbol,
+#bomap.active-jahrhunderthalle #place-jahrhunderthalle .place-marker_symbol,
+#bomap.active-musikzentrum #place-musikzentrum .place-marker_symbol,
+#bomap.active-ruhrpark #place-ruhrpark .place-marker_symbol,
+#bomap.active-ruhruniversitaet #place-ruhruniversitaet .place-marker_symbol,
+#bomap.active-stadtbad #place-stadtbad .place-marker_symbol,
+#bomap.active-u35 #place-u35 .place-marker_symbol {
   fill: #fff;
 }
 

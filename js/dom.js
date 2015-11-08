@@ -60,183 +60,222 @@ window.boprom.places = {
     }
 };
 
-Zepto(function ($) {
+(function ($) {
 
-    var initMap = function () {
-            var $mapWrapper = $('.map-wrapper'),
-                $bomap = $mapWrapper.find('#bomap'),
-                $zoomHover = $bomap.find('.zoom-hover'),
-                $zoomOut = $bomap.find('.control-zoom-out'),
-                $places = $bomap.find('.place'),
-                $addressInfo = $('<div id="address-info" />').insertAfter($mapWrapper),
-                $addressInfoInner = $('<div id="address-info_inner" />').appendTo($addressInfo),
-                $addressInfoTitle = $('<h3 id="address-info_title" />').appendTo($addressInfoInner),
-                $addressInfoQuote = $('<div id="address-info_quote" />').appendTo($addressInfoInner),
-                $addressInfoStreet = $('<div id="address-info_street" />').appendTo($addressInfoInner),
-                $addressInfoCity = $('<div id="address-info_city" />').appendTo($addressInfoInner),
-                $addressInfoNavigate = $('<a id="address-info_navigate">Navigation starten</a>').appendTo($addressInfoInner),
-                navActionEnd = function () {
-                    $places.each(function () {
-                        this.classList.remove('active');
-                    });
-                    $addressInfo.removeClass('active');
-                },
-                zoomClass = 'zoom',
-                latlon,
-                mapUrl;
+    $.fn.addClassSVG = function (className) {
+        $(this).attr('class', function (index, existingClassNames) {
+            return existingClassNames + ' ' + className;
+        });
+        return this;
+    };
 
-            $zoomHover.on('click', function () {
-                $bomap.addClass(zoomClass);
-            });
-            $zoomOut.on('click', function () {
-                $bomap.removeClass(zoomClass);
-                navActionEnd();
-            });
-            $places.on('click', function () {
-                var $this = $(this),
-                    name = $this.attr('id'),
-                    placeObj;
-                if (!boprom.places[name]) {
-                    return;
-                }
+    /*
+     * .removeClassSVG(className)
+     * Removes the specified class to each of the set of matched SVG elements.
+     */
+    $.fn.removeClassSVG = function (className) {
+        $(this).attr('class', function (index, existingClassNames) {
+            return existingClassNames.replace(className, '');
+        });
+        return this;
+    };
 
-                navActionEnd();
-                this.classList.add('active');
-                placeObj = boprom.places[name];
-                $addressInfoTitle.html(placeObj.title);
-                $addressInfoQuote.html('»' + placeObj.quote + '«');
-                $addressInfoStreet.html(placeObj.street);
-                $addressInfoCity.html(placeObj.postal + ' Bochum');
-                latlon = placeObj.lat + ',' + placeObj.lon;
-                mapUrl = 'https://maps.apple.com/?address=' + latlon +
-                    '&ll=' + latlon + '&daddr=' + latlon;
-                $addressInfoNavigate.attr('href', mapUrl);
-                $addressInfo.addClass('active');
-                $('body').scrollTop($mapWrapper.parent().prop('scrollHeight'));
-            });
+    $(document).ready(function () {
 
-        },
-        initPlayer = function () {
-            var $player = $('.player'),
-                $playerBtn = $player.find('.player-button'),
-                $playerProgressTrack = $player.find('.player-progress_track'),
-                $playerProgressBar = $player.find('.player-progress_bar'),
-                $playerMessageText = $player.find('.player-message_text'),
-                $playerMessageBtnNext = $player.find('.player-message_btn--next'),
-                $playerMessageBtnBack = $player.find('.player-message_btn--back'),
-                playerLoadingClass = 'player--loading',
-                playerBtnActiveClass = 'player--playing',
-                playerMessageActiveClass = 'player--message',
-                playerOptionNext = 'Mehr hören',
-                playerOptionLast = 'Erneut hören',
-                playerTextNext = 'Möchten Sie mehr hören?',
-                playerTextLast = 'Möchten Sie alle Stücke erneut hören?',
-                playlist = [],
-                currentSound = 0,
-                setProgressBar = function (progress) {
-                    $playerProgressBar.width((progress * 100) + '%');
-                },
-                addTrack = function (trackname) {
-                    playlist.push(new buzz.sound('/audio/' + trackname, {
-                        formats: ['ogg', 'mp3']
-                        })
-                        .bind('ended', trackend)
-                        .bind('loadstart seeking', function (e) {
-                            $player.addClass(playerLoadingClass);
-                        })
-                        .bind('canplay', function () {
-                            $player.removeClass(playerLoadingClass)
-                        }));
-                },
-                isLastTrack = function () {
-                    return currentSound === (boprom.audio.length - 1);
-                },
-                play = function () {
-                    if (!playlist[currentSound]) {
-                        addTrack(boprom.audio[currentSound]);
+        var initMap = function () {
+                var $bomap = $mapWrapper.find('#bomap'),
+                    $zoomHover = $bomap.find('.zoom-hover'),
+                    $zoomOut = $bomap.find('.control-zoom-out'),
+                    $addressInfo = $('<div id="address-info" />').insertAfter($mapWrapper),
+                    $addressInfoInner = $('<div id="address-info_inner" />').appendTo($addressInfo),
+                    $addressInfoTitle = $('<h3 id="address-info_title" />').appendTo($addressInfoInner),
+                    $addressInfoQuote = $('<div id="address-info_quote" />').appendTo($addressInfoInner),
+                    $addressInfoStreet = $('<div id="address-info_street" />').appendTo($addressInfoInner),
+                    $addressInfoCity = $('<div id="address-info_city" />').appendTo($addressInfoInner),
+                    $addressInfoNavigate = $('<a id="address-info_navigate">Navigation starten</a>').appendTo($addressInfoInner),
+                    navActionEnd = function () {
+                        $(placesSelector).each(function () {
+                            this.classList.remove('active');
+                        });
+                        $addressInfo.removeClass('active');
+                    },
+                    placesSelector = '.place',
+                    zoomClass = 'zoom',
+                    latlon,
+                    mapUrl;
+
+                $zoomHover.on('click', function () {
+                    $bomap.addClassSVG(zoomClass);
+                });
+                $zoomOut.on('click', function () {
+                    $bomap.removeClassSVG(zoomClass);
+                    navActionEnd();
+                });
+                $mapWrapper.on('click', '.place', function () {
+                    console.log('place clicked');
+                    var $this = $(this),
+                        name = $this.data('placename'),
+                        placeObj;
+                    if (!boprom.places[name]) {
+                        return;
                     }
-                    playlist[currentSound].play();
-                    playing = true;
-                    playTimer = setInterval(function () {
-                        position = playlist[currentSound].getTime();
-                        duration = playlist[currentSound].getDuration();
-                        setProgressBar(position / duration);
-                    }, 250);
-                },
-                pause = function () {
-                    clearInterval(playTimer);
-                    playlist[currentSound].pause();
-                    playing = false;
-                },
-                seek = function (progress) {
-                    var position = Math.min(Math.max(progress, 0), 1) * duration;
-                    playlist[currentSound].setTime(position);
-                    setProgressBar(progress);
-                },
-                trackend = function () {
-                    playing = false;
-                    if (isLastTrack()) {
-                        $playerMessageBtnNext.text(playerOptionLast);
-                        $playerMessageText.text(playerTextLast);
+
+                    navActionEnd();
+                    this.classList.add('active');
+                    placeObj = boprom.places[name];
+                    $addressInfoTitle.html(placeObj.title);
+                    $addressInfoQuote.html('»' + placeObj.quote + '«');
+                    $addressInfoStreet.html(placeObj.street);
+                    $addressInfoCity.html(placeObj.postal + ' Bochum');
+                    latlon = placeObj.lat + ',' + placeObj.lon;
+                    mapUrl = 'https://maps.apple.com/?address=' + latlon +
+                        '&ll=' + latlon + '&daddr=' + latlon;
+                    $addressInfoNavigate.attr('href', mapUrl);
+                    $addressInfo.addClass('active');
+                    $('html, body').animate({
+                        scrollTop: $addressInfo.offset().top - 30
+                    }, 200);
+                });
+
+            },
+            initPlayer = function () {
+                var $player = $('.player'),
+                    $playerBtn = $player.find('.player-button'),
+                    $playerProgressTrack = $player.find('.player-progress_track'),
+                    $playerProgressBar = $player.find('.player-progress_bar'),
+                    $playerMessageText = $player.find('.player-message_text'),
+                    $playerMessageBtnNext = $player.find('.player-message_btn--next'),
+                    $playerMessageBtnBack = $player.find('.player-message_btn--back'),
+                    playerLoadingClass = 'player--loading',
+                    playerBtnActiveClass = 'player--playing',
+                    playerMessageActiveClass = 'player--message',
+                    playerOptionNext = 'Mehr hören',
+                    playerOptionLast = 'Erneut hören',
+                    playerTextNext = 'Möchten Sie mehr hören?',
+                    playerTextLast = 'Möchten Sie alle Stücke erneut hören?',
+                    playlist = [],
+                    currentSound = 0,
+                    setProgressBar = function (progress) {
+                        $playerProgressBar.width((progress * 100) + '%');
+                    },
+                    addTrack = function (trackname) {
+                        playlist.push(new buzz.sound('/audio/' + trackname, {
+                            formats: ['ogg', 'mp3']
+                        })
+                            .bind('ended', trackend)
+                            .bind('loadstart seeking', function () {
+                                $player.addClass(playerLoadingClass);
+                            })
+                            .bind('canplay', function () {
+                                $player.removeClass(playerLoadingClass)
+                            }));
+                    },
+                    isLastTrack = function () {
+                        return currentSound === (boprom.audio.length - 1);
+                    },
+                    play = function () {
+                        if (!playlist[currentSound]) {
+                            addTrack(boprom.audio[currentSound]);
+                        }
+                        playlist[currentSound].play();
+                        playing = true;
+                        playTimer = setInterval(function () {
+                            position = playlist[currentSound].getTime();
+                            duration = playlist[currentSound].getDuration();
+                            setProgressBar(position / duration);
+                        }, 250);
+                    },
+                    pause = function () {
+                        clearInterval(playTimer);
+                        playlist[currentSound].pause();
+                        playing = false;
+                    },
+                    seek = function (progress) {
+                        var position = Math.min(Math.max(progress, 0), 1) * duration;
+                        playlist[currentSound].setTime(position);
+                        setProgressBar(progress);
+                    },
+                    trackend = function () {
+                        playing = false;
+                        if (isLastTrack()) {
+                            $playerMessageBtnNext.text(playerOptionLast);
+                            $playerMessageText.text(playerTextLast);
+                        } else {
+                            $playerMessageBtnNext.text(playerOptionNext);
+                            $playerMessageText.text(playerTextNext);
+                        }
+                        $player.removeClass(playerBtnActiveClass);
+                        $player.addClass(playerMessageActiveClass);
+                    },
+                    next = function () {
+                        currentSound = (isLastTrack()) ? 0 : currentSound + 1;
+                    },
+                    playing = false,
+                    playTimer,
+                    position,
+                    duration;
+
+                //addTrack(boprom.audio[0]);
+
+                $playerBtn.click(function () {
+                    if (!playing) {
+                        if ($player.hasClass(playerMessageActiveClass)) {
+                            next();
+                        }
+                        $player.removeClass(playerMessageActiveClass);
+                        $player.addClass(playerBtnActiveClass);
+                        play();
                     } else {
-                        $playerMessageBtnNext.text(playerOptionNext);
-                        $playerMessageText.text(playerTextNext);
+                        $player.removeClass(playerBtnActiveClass);
+                        pause();
                     }
-                    $player.removeClass(playerBtnActiveClass);
-                    $player.addClass(playerMessageActiveClass);
-                },
-                next = function () {
-                    currentSound = (isLastTrack()) ? 0 : currentSound + 1;
-                },
-                playing = false,
-                playTimer,
-                position,
-                duration;
+                });
 
-            //addTrack(boprom.audio[0]);
-
-            $playerBtn.click(function () {
-                if (!playing) {
-                    if ($player.hasClass(playerMessageActiveClass)) {
-                        next();
+                $playerProgressTrack.click(function (e) {
+                    var $this = $(this),
+                        pos, width, progress;
+                    if (playing) {
+                        pos = e.pageX - $this.offset().left;
+                        width = $this.width();
+                        progress = pos / width;
+                        seek(progress);
                     }
-                    $player.removeClass(playerMessageActiveClass);
-                    $player.addClass(playerBtnActiveClass);
+                });
+
+                $playerMessageBtnNext.click(function () {
+                    next();
                     play();
-                } else {
-                    $player.removeClass(playerBtnActiveClass);
-                    pause();
-                }
-            });
+                    $player.addClass(playerBtnActiveClass);
+                    $player.removeClass(playerMessageActiveClass);
+                });
 
-            $playerProgressTrack.click(function (e) {
-                var $this = $(this),
-                    pos, width, progress;
-                if (playing) {
-                    pos = e.pageX - $this.offset().left;
-                    width = $this.width();
-                    progress = pos / width;
-                    seek(progress);
-                }
-            });
+                $playerMessageBtnBack.click(function () {
+                    seek(0);
+                    $player.removeClass(playerMessageActiveClass);
+                });
+            },
+            $mapWrapper = $('.map-wrapper'),
+            script;
 
-            $playerMessageBtnNext.click(function (e) {
-                next();
-                play();
-                $player.addClass(playerBtnActiveClass);
-                $player.removeClass(playerMessageActiveClass);
-            })
 
-            $playerMessageBtnBack.click(function (e) {
-                seek(0);
-                $player.removeClass(playerMessageActiveClass);
-            });
-        };
+        if (!Modernizr.inlinesvg) {
+            $mapWrapper.append($('<img class="mapFallback" src="img/boprom_map.png" alt="Bochumer Versprechen: Karte aller Hörstationen" usemap="#mapFallback-map"/><map name="mapFallback-map"><area class="place" data-placename="jahrhunderthalle" shape="circle" coords="149, 212, 18"/><area class="place" data-placename="musikzentrum" shape="circle" coords="234, 241, 16"/><area class="place" data-placename="stadtbad" shape="circle" coords="261, 212, 19"/><area class="place" data-placename="exzenterhaus" shape="circle" coords="288, 277, 17"/><area class="place" data-placename="u35" shape="circle" coords="291, 235, 17"/><area class="place" data-placename="ruhruniversitaet" shape="circle" coords="470, 504, 18"/><area class="place" data-placename="ruhrpark" shape="circle" coords="581, 101, 17"/></map>'));
+            script = document.createElement('script');
+            script.async = 'async';
+            script.src = '/vendor/jQuery-rwdImageMaps/jquery.rwdImageMaps.min.js';
+            script.onload = function () {
+                $('img[usemap]').rwdImageMaps();
+            };
+            document
+                .getElementsByTagName('head')[0]
+                .appendChild(script);
+        }
+        initMap();
 
-    initMap();
-    /* Player */
-    if (boprom.audio) {
-        initPlayer();
-    }
+        if (boprom.audio) {
+            initPlayer();
+        }
 
-});
+    });
+
+}(jQuery));

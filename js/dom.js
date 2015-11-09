@@ -259,7 +259,7 @@ window.boprom.places = {
 
 
         if (!Modernizr.inlinesvg) {
-            $mapWrapper.append($('<img class="mapFallback" src="img/boprom_map.png" alt="Bochumer Versprechen: Karte aller Hörstationen" usemap="#mapFallback-map"/><map name="mapFallback-map"><area class="place" data-placename="jahrhunderthalle" shape="circle" coords="149, 212, 18"/><area class="place" data-placename="musikzentrum" shape="circle" coords="234, 241, 16"/><area class="place" data-placename="stadtbad" shape="circle" coords="261, 212, 19"/><area class="place" data-placename="exzenterhaus" shape="circle" coords="288, 277, 17"/><area class="place" data-placename="u35" shape="circle" coords="291, 235, 17"/><area class="place" data-placename="ruhruniversitaet" shape="circle" coords="470, 504, 18"/><area class="place" data-placename="ruhrpark" shape="circle" coords="581, 101, 17"/></map>'));
+            $mapWrapper.append($('<img class="mapFallback" src="/img/boprom_map.png" alt="Bochumer Versprechen: Karte aller Hörstationen" usemap="#mapFallback-map"/>'));
             script = document.createElement('script');
             script.async = 'async';
             script.src = '/vendor/jQuery-rwdImageMaps/jquery.rwdImageMaps.min.js';

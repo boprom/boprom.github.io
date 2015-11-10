@@ -95,7 +95,7 @@ window.boprom.places = {
                     $addressInfoNavigate = $('<a id="address-info_navigate" target="_blank">Navigation starten</a>').appendTo($addressInfoInner),
                     navActionEnd = function () {
                         $(placesSelector).each(function () {
-                            this.classList.remove('active');
+                            $(this).removeClassSVG('active');
                         });
                         $addressInfo.removeClass('active');
                     },
@@ -120,7 +120,7 @@ window.boprom.places = {
                     }
 
                     navActionEnd();
-                    this.classList.add('active');
+                    $this.addClassSVG('active');
                     placeObj = boprom.places[name];
                     $addressInfoTitle.html(placeObj.title);
                     $addressInfoQuote.html('»' + placeObj.quote + '«');

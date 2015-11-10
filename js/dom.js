@@ -92,7 +92,7 @@ window.boprom.places = {
                     $addressInfoQuote = $('<div id="address-info_quote" />').appendTo($addressInfoInner),
                     $addressInfoStreet = $('<div id="address-info_street" />').appendTo($addressInfoInner),
                     $addressInfoCity = $('<div id="address-info_city" />').appendTo($addressInfoInner),
-                    $addressInfoNavigate = $('<a id="address-info_navigate">Navigation starten</a>').appendTo($addressInfoInner),
+                    $addressInfoNavigate = $('<a id="address-info_navigate" target="_blank">Navigation starten</a>').appendTo($addressInfoInner),
                     navActionEnd = function () {
                         $(placesSelector).each(function () {
                             this.classList.remove('active');
@@ -259,7 +259,7 @@ window.boprom.places = {
 
 
         if (!Modernizr.inlinesvg) {
-            $mapWrapper.append($('<img class="mapFallback" src="/img/boprom_map.png" alt="Bochumer Versprechen: Karte aller Hörstationen" usemap="#mapFallback-map"/>'));
+            $mapWrapper.append($('<img class="mapFallback" src="img/boprom_map.png" alt="Bochumer Versprechen: Karte aller Hörstationen" usemap="#mapFallback-map"/><map name="mapFallback-map"><area class="place" data-placename="jahrhunderthalle" shape="circle" coords="149, 212, 18"/><area class="place" data-placename="musikzentrum" shape="circle" coords="234, 241, 16"/><area class="place" data-placename="stadtbad" shape="circle" coords="261, 212, 19"/><area class="place" data-placename="exzenterhaus" shape="circle" coords="288, 277, 17"/><area class="place" data-placename="u35" shape="circle" coords="291, 235, 17"/><area class="place" data-placename="ruhruniversitaet" shape="circle" coords="470, 504, 18"/><area class="place" data-placename="ruhrpark" shape="circle" coords="581, 101, 17"/></map>'));
             script = document.createElement('script');
             script.async = 'async';
             script.src = '/vendor/jQuery-rwdImageMaps/jquery.rwdImageMaps.min.js';

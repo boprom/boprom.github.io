@@ -112,7 +112,6 @@ window.boprom.places = {
                     navActionEnd();
                 });
                 $mapWrapper.on('click', '.place', function () {
-                    console.log('place clicked');
                     var $this = $(this),
                         name = $this.data('placename'),
                         placeObj;

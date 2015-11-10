@@ -145,7 +145,6 @@ window.boprom.places = {
                     $playerProgressBar = $player.find('.player-progress_bar'),
                     $playerMessageText = $player.find('.player-message_text'),
                     $playerMessageBtnNext = $player.find('.player-message_btn--next'),
-                    $playerMessageBtnBack = $player.find('.player-message_btn--back'),
                     playerLoadingClass = 'player--loading',
                     playerBtnActiveClass = 'player--playing',
                     playerMessageActiveClass = 'player--message',
@@ -215,8 +214,6 @@ window.boprom.places = {
                     position,
                     duration;
 
-                //addTrack(boprom.audio[0]);
-
                 $playerBtn.click(function () {
                     if (!playing) {
                         if ($player.hasClass(playerMessageActiveClass)) {
@@ -246,11 +243,6 @@ window.boprom.places = {
                     next();
                     play();
                     $player.addClass(playerBtnActiveClass);
-                    $player.removeClass(playerMessageActiveClass);
-                });
-
-                $playerMessageBtnBack.click(function () {
-                    seek(0);
                     $player.removeClass(playerMessageActiveClass);
                 });
             },

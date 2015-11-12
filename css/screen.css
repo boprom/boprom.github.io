@@ -511,11 +511,6 @@ a:hover {
   font-size: 1.25em;
 }
 
-.container--home-content .container-inner {
-  padding: 2em 1.4em 1.4em;
-  border: 6px double #fff;
-}
-
 .places {
   margin: 1em 0;
   padding: 0;

@@ -494,11 +494,23 @@ a:hover {
   /* only required for <img /> */
 }
 
+.logo-subtitle {
+  padding: 1.4em .8em .8em;
+  font-style: italic;
+}
+
 .noscriptMsg {
   padding: 1.4em 2em 1.8em;
   color: #D70B52;
   font-weight: 700;
   text-align: center;
+}
+
+@media screen and (min-width: 420px) {
+  .logo-subtitle {
+    font-size: 1.125em;
+    letter-spacing: 3px;
+  }
 }
 
 .container--footer {
@@ -509,6 +521,10 @@ a:hover {
   padding-top: 0;
   line-height: 1.6;
   font-size: 1.25em;
+}
+
+.container--home-content .container-inner {
+  padding: 2em 1.4em 1.4em;
 }
 
 .places {
@@ -770,6 +786,34 @@ a:hover {
 .player-progress_bar {
   width: 0%;
   height: 32px;
+  background: #fff;
+}
+
+.playlist {
+  border: 2px solid #fff;
+}
+
+.playlist-track {
+  display: block;
+  padding: .2em .4em;
+  border-top: 2px solid #fff;
+  background: #D70B52;
+  text-align: right;
+  -webkit-transition: all .15s ease-in-out;
+          transition: all .15s ease-in-out;
+  cursor: pointer;
+}
+
+.playlist-track:first-child {
+  border-top: none;
+}
+
+.playlist-track:hover {
+  background: #f982ac;
+}
+
+.playlist-track.active, .playlist-track.active:hover {
+  color: #D70B52;
   background: #fff;
 }
 

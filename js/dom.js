@@ -142,6 +142,7 @@ window.boprom.places = {
                     $playerBtn = $player.find('.player-button'),
                     $playerProgressTrack = $player.find('.player-progress_track'),
                     $playerProgressBar = $player.find('.player-progress_bar'),
+                    $playerPlaylist = $player.find('.player-playlist'),
                     $playerMessageText = $player.find('.player-message_text'),
                     $playerMessageBtnNext = $player.find('.player-message_btn--next'),
                     playerLoadingClass = 'player--loading',
@@ -151,6 +152,7 @@ window.boprom.places = {
                     playerOptionLast = 'Erneut hören',
                     playerTextNext = 'Möchten Sie mehr hören?',
                     playerTextLast = 'Möchten Sie alle Stücke erneut hören?',
+                    trackTitle = boprom.places[boprom.place]['title'],
                     playlist = [],
                     currentSound = 0,
                     setProgressBar = function (progress) {
@@ -158,7 +160,8 @@ window.boprom.places = {
                     },
                     addTrack = function (trackname) {
                         playlist.push(new buzz.sound('/audio/' + trackname, {
-                            formats: ['ogg', 'mp3']
+                            formats: ['ogg', 'mp3'],
+                            preload: 'metadata',
                         })
                             .bind('ended', trackend)
                             .bind('loadstart seeking', function () {
@@ -172,11 +175,21 @@ window.boprom.places = {
                         return currentSound === (boprom.audio.length - 1);
                     },
                     play = function () {
+                        if ($player.hasClass(playerMessageActiveClass)) {
+                            next();
+                        }
+                        $player.removeClass(playerMessageActiveClass);
+                        $player.addClass(playerBtnActiveClass);
                         if (!playlist[currentSound]) {
                             addTrack(boprom.audio[currentSound]);
                         }
                         playlist[currentSound].play();
                         playing = true;
+                        $playerPlaylist
+                            .children()
+                            .removeClass('active')
+                            .filter(':eq(' + currentSound + ')')
+                            .addClass('active');
                         playTimer = setInterval(function () {
                             position = playlist[currentSound].getTime();
                             duration = playlist[currentSound].getDuration();
@@ -187,6 +200,7 @@ window.boprom.places = {
                         clearInterval(playTimer);
                         playlist[currentSound].pause();
                         playing = false;
+                        $player.removeClass(playerBtnActiveClass);
                     },
                     seek = function (progress) {
                         var position = Math.min(Math.max(progress, 0), 1) * duration;
@@ -208,21 +222,37 @@ window.boprom.places = {
                     next = function () {
                         currentSound = (isLastTrack()) ? 0 : currentSound + 1;
                     },
+                    skip = function(index) {
+                        playlist[currentSound].stop();
+                        currentSound = index;
+                        playlist[currentSound].stop();
+                        play();
+                    },
                     playing = false,
                     playTimer,
                     position,
                     duration;
 
+                $.each(boprom.audio, function(index) {
+                    var track = this,
+                        title = trackTitle + ' ' + (index + 1);
+                    addTrack(track);
+                    $playerPlaylist.append($('<span />', {
+                        class: 'playlist-track',
+                        text: title,
+                        'data-track': index
+                    }));
+                });
+                $playerPlaylist.on('click', '.playlist-track', function() {
+                    var track = $(this).data('track');
+                    skip(track);
+                    play();
+                });
+
                 $playerBtn.click(function () {
                     if (!playing) {
-                        if ($player.hasClass(playerMessageActiveClass)) {
-                            next();
-                        }
-                        $player.removeClass(playerMessageActiveClass);
-                        $player.addClass(playerBtnActiveClass);
                         play();
                     } else {
-                        $player.removeClass(playerBtnActiveClass);
                         pause();
                     }
                 });
